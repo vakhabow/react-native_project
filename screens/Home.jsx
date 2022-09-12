@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React from 'react';
+import axios from "axios";
+import React from "react";
 import {
   Alert,
   Text,
@@ -8,8 +8,8 @@ import {
   ActivityIndicator,
   RefreshControl,
   TouchableOpacity,
-} from 'react-native';
-import { Post } from '../components/Post';
+} from "react-native";
+import { Post } from "../components/Post";
 
 export const HomeScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -18,13 +18,13 @@ export const HomeScreen = ({ navigation }) => {
   const fetchPosts = () => {
     setIsLoading(true);
     axios
-      .get('https://631c4bd21b470e0e12fe7830.mockapi.io/articles')
+      .get("https://631c4bd21b470e0e12fe7830.mockapi.io/articles")
       .then(({ data }) => {
         setItems(data);
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert('Ошибка', 'Не удалось получить статьи');
+        Alert.alert("Ошибка", "Не удалось получить статьи");
       })
       .finally(() => {
         setIsLoading(false);
@@ -38,9 +38,10 @@ export const HomeScreen = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ActivityIndicator size="large" />
         <Text style={{ marginTop: 15 }}>Загрузка...</Text>
       </View>
@@ -50,12 +51,24 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <FlatList
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />
+        }
         data={items}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('FullPost', { id: item.id, title: item.title })}>
-            <Post title={item.title} imageUrl={item.imageUrl} createdAt={item.createdAt} />
+            onPress={() =>
+              navigation.navigate("FullPost", {
+                id: item.id,
+                title: item.title,
+              })
+            }
+          >
+            <Post
+              title={item.title}
+              imageUrl={item.imageUrl}
+              createdAt={item.createdAt}
+            />
           </TouchableOpacity>
         )}
       />
